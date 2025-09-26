@@ -30,8 +30,8 @@ pipeline {
                     # Install Python and pip
                     sudo apt-get install -y python3 python3-pip python3-venv
                     
-                    # Install Ansible via pip (more reliable than apt)
-                    pip3 install --user ansible
+                    # Use apt-get to install Ansible
+                    sudo apt-get install -y ansible
                     
                     # Add pip user bin to PATH
                     export PATH=$PATH:~/.local/bin
