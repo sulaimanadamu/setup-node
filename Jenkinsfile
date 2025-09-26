@@ -111,7 +111,6 @@ pipeline {
                         echo 'Building Node.js application...'
                         sh '''
                             cd node_app
-                            
                             # Run build script if it exists
                             if npm run build --silent 2>/dev/null; then
                                 npm run build
