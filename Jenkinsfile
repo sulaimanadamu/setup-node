@@ -51,7 +51,7 @@ pipeline {
                         sh '''
                             # Create virtual environment
                             python3 -m venv venv
-                            source venv/bin/activate
+                            . venv/bin/activate
                             
                             # Install Flask dependencies
                             pip install -r ./flask_app/requirements.txt
@@ -89,7 +89,7 @@ pipeline {
                     steps {
                         echo 'Building Flask application...'
                         sh '''
-                            source venv/bin/activate
+                            . venv/bin/activate
                             cd flask_app
                             
                             # Test Flask app if app.py exists
