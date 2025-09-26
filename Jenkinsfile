@@ -127,6 +127,27 @@ pipeline {
                 }
             }
         }
+
+       
+        stage('Archive Artifacts') {
+            steps {
+                script {
+                    def versionTag = "build-${env.BUILD_NUMBER}"
+
+                    // Archive Flask app (if it exists)
+                    if (fileExists('./flask_app')) {
+                        sh "tar -czf flask_app-${versionTag}.tar.gz flask_app/"
+                        archiveArtifacts artifacts: "flask_app-${versionTag}.tar.gz", fingerprint: true
+                    }
+
+                    // Archive Node.js app (if it exists)
+                    if (fileExists('./node_app')) {
+                        sh "tar -czf node_app-${versionTag}.tar.gz node_app/"
+                        archiveArtifacts artifacts: "node_app-${versionTag}.tar.gz", fingerprint: true
+                    }
+                }
+            }
+        }
         
         stage('Verify Installation') {
             steps {
@@ -155,7 +176,7 @@ pipeline {
             echo 'Pipeline completed!'
         }
         success {
-            echo 'All dependencies installed and apps built successfully!'
+            echo 'All dependencies installed, apps built, and artifacts archived successfully!'
         }
         failure {
             echo 'Pipeline failed. Check logs for details.'
