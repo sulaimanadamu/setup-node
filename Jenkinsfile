@@ -11,10 +11,12 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
+                deleteDir()   // clean the workspace
                 echo 'Cloning repository...'
                 git branch: "${BRANCH}", url: "${REPO_URL}"
             }
         }
+
         
         stage('Install System Tools') {
             steps {
@@ -149,6 +151,23 @@ pipeline {
             }
         }
         
+        stage('Deploy with Ansible') {
+            steps {
+                echo 'Deploying artifacts with Ansible...'
+                sh '''
+                    # Copy Ansible inventory + roles into workspace if not already present
+                    if [ ! -d "ansible" ]; then
+                        echo "No ansible/ directory found in repo!"
+                        exit 1
+                    fi
+
+                    # Run Ansible playbook to deploy apps
+                    ansible-playbook -i ansible/host.ini ansible/site.yml \
+                        --extra-vars "flask_artifact=$(ls flask_app-*.tar.gz 2>/dev/null | tail -n 1) node_artifact=$(ls node_app-*.tar.gz 2>/dev/null | tail -n 1)"
+                '''
+            }
+        }
+
         stage('Verify Installation') {
             steps {
                 echo 'Verifying installations...'
