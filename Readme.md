@@ -2,4 +2,4 @@
 
 we are going to use a worker node to build and deploy app.
 
-two apps on one server sharing one database
+two apps on one server sharing one database which has only one port.
