@@ -7,4 +7,4 @@ enabling two different port access to app.
 
 using an amazon linux 2023 server for webserver.
 
-trigger on .S
+trigger on ...
