@@ -6,3 +6,5 @@ two apps on one server sharing one database which has only one port.
 enabling two different port access to app.
 
 using an amazon linux 2023 server for webserver.
+
+trigger on
